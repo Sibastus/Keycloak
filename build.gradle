@@ -1,0 +1,108 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE'
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE")
+        classpath 'org.postgresql:postgresql:42.2.3'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'war'
+    id "org.springframework.boot" version "2.1.1.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+}
+
+group 'com.infopulse'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+
+repositories {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url("https://plugins.gradle.org/m2/")
+        }
+        maven{
+            url("https://repo.spring.io/libs-milestone")
+        }
+    }
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Greenwich.M2'
+        mavenBom "org.springframework.cloud:spring-cloud-stream-dependencies:Fishtown.M3"
+        mavenBom 'org.springframework.boot:spring-boot-dependencies:2.1.1.RELEASE'
+    }
+}
+
+configurations.all {
+    exclude group:"ch.qos.logback", module:"logback-core"
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile 'org.springframework.integration:spring-integration-core'
+    compile 'org.springframework.cloud:spring-cloud-stream'
+    compile 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.kafka:spring-kafka'
+    compile 'org.springframework.boot:spring-boot-starter-cache'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc'
+    compile 'org.springframework.boot:spring-boot-devtools'
+    compile 'org.springframework.boot:spring-boot-configuration-processor'
+    // kafka
+    compile 'org.springframework.cloud:spring-cloud-stream'
+    compile 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.7'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.7'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.7'
+    compile 'org.jboss.resteasy:resteasy-servlet-initializer:3.6.2.Final'
+    compile 'org.jboss.resteasy:resteasy-jackson2-provider:3.6.2.Final'
+    compile 'org.jboss.resteasy:resteasy-jaxb-provider:3.6.2.Final'
+    compile 'org.jboss.resteasy:resteasy-client:3.6.2.Final'
+    compile 'org.infinispan:infinispan-core:9.4.4.Final'
+
+    compile 'org.keycloak:keycloak-model-infinispan:4.7.0.Final'
+    compile ('org.keycloak:keycloak-services:4.7.0.Final'){
+        exclude group: 'org.jboss.spec.javax.servlet', module:'jboss-servlet-api_3.0_spec'
+    }
+    compile 'org.keycloak:keycloak-model-jpa:4.7.0.Final'
+    compile 'org.keycloak:keycloak-js-adapter:4.7.0.Final'
+    compile 'org.keycloak:keycloak-themes:4.7.0.Final'
+    compile 'org.keycloak:keycloak-saml-core:4.7.0.Final'
+    compile 'org.keycloak:keycloak-authz-policy-common:4.7.0.Final'
+    compile 'org.keycloak:keycloak-admin-client:4.7.0.Final'
+
+    compile 'org.freemarker:freemarker:2.3.28'
+
+    compile 'org.hibernate:hibernate-core:5.4.0.Final'
+
+    compile 'org.postgresql:postgresql:9.4-1200-jdbc41'
+
+    compile 'org.slf4j:slf4j-simple:1.7.7'
+
+    compile(group: 'com.zaxxer', name: 'HikariCP', version: '3.2.0') {
+        exclude(module: 'tools')
+    }
+    compile(group: 'org.projectlombok', name: 'lombok', version: '1.18.2')
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+bootJar {
+    mainClassName = 'com.infopulse.keycloak.EmbeddedKeycloakApp'
+}
