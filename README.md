@@ -1,8 +1,12 @@
 Keycloak application created using Spring Boot, and using dependency management with Gradle.
-For messaging use Apache Kafka - S (la 2.12  - kafka_2.12-2.2.0 dir) :;
-Starting app - Gradlew bootRun
 
-CMD commands for starting Apache Kafka (use cmd in kafka_2.12-2.2.0 dir) :
+For messaging use Apache Kafka - S (la 2.12  - kafka_2.12-2.2.0 dir).
+
+Starting app - "gradlew bootRun".
+
+
+CMD commands for starting Apache Kafka (use cmd in kafka_2.12-2.2.0 dir):
+
 //zookeaper
 
 1)bin\windows\zookeeper-server-start.bat config\zookeeper.properties
